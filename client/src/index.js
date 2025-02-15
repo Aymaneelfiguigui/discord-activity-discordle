@@ -1,11 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { insertCoin } from 'playroomkit';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { insertCoin } from "playroomkit";
+import { GameStateProvider } from "./hooks/UseGameState";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
 async function startGame() {
   try {
@@ -15,7 +16,9 @@ async function startGame() {
 
     root.render(
       <React.StrictMode>
-        <App />
+        <GameStateProvider>
+          <App />
+        </GameStateProvider>
       </React.StrictMode>
     );
   } catch (error) {

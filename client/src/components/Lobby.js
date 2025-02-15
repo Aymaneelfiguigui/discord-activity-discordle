@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
+import { usePlayersList } from "playroomkit";
+import { useGameState } from "../hooks/UseGameState";
 
 const UserIcon = () => (
   <svg
@@ -17,22 +19,13 @@ const UserIcon = () => (
 );
 
 const WordleLobby = () => {
-  const [players, setPlayers] = useState([
-    { id: 1, username: null },
-    { id: 2, username: null },
-    { id: 3, username: null },
-    { id: 4, username: null },
-    { id: 5, username: null }
-  ]);
+  const { timer, stage, host, startGame } = useGameState();
 
-  const joinAsPlayer = () => {
-    const firstEmptySlot = players.findIndex(p => !p.username);
-    if (firstEmptySlot !== -1) {
-      const newPlayers = [...players];
-      newPlayers[firstEmptySlot] = { ...newPlayers[firstEmptySlot], username: "New Player" };
-      setPlayers(newPlayers);
-    }
-  };
+  const players = usePlayersList(true);
+  console.log("players are here : ", players);
+  players.forEach((player) => {
+    player.name = `user ${Math.floor(Math.random() * 100)}`;
+  });
 
   return (
     <div
@@ -42,8 +35,8 @@ const WordleLobby = () => {
           radial-gradient(circle, rgba(0,0,0,0.1) 2px, transparent 2px),
           radial-gradient(circle, rgba(0,0,0,0.1) 2px, transparent 2px)
         `,
-        backgroundSize: '20px 20px',
-        backgroundPosition: '0 0, 10px 10px'
+        backgroundSize: "20px 20px",
+        backgroundPosition: "0 0, 10px 10px",
       }}
     >
       <div className="max-w-4xl w-full bg-white shadow-xl rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
@@ -51,7 +44,7 @@ const WordleLobby = () => {
         <div
           className="absolute inset-0 opacity-20"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
           }}
         />
 
@@ -62,8 +55,8 @@ const WordleLobby = () => {
             <h1
               className="text-5xl font-black mb-2 text-shadow-lg"
               style={{
-                fontFamily: 'Playfair Display, serif',
-                textShadow: '2px 2px #fff, 4px 4px #000'
+                fontFamily: "Playfair Display, serif",
+                textShadow: "2px 2px #fff, 4px 4px #000",
               }}
             >
               DISCORDLE TIMES
@@ -80,7 +73,7 @@ const WordleLobby = () => {
             <div className="w-full">
               <h2
                 className="text-3xl font-bold mb-4 text-shadow-md"
-                style={{ fontFamily: 'Playfair Display, serif' }}
+                style={{ fontFamily: "Playfair Display, serif" }}
               >
                 PLAYERS GAZETTE
               </h2>
@@ -91,18 +84,22 @@ const WordleLobby = () => {
                     className="group relative bg-[#e8d5b5] border-2 border-black/40 rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105"
                   >
                     <div className="p-4 flex items-center justify-between">
-                      {player.username ? (
+                      {player.name ? (
                         <div className="flex items-center gap-3">
                           <UserIcon />
-                          <span className="font-serif text-xl">{player.username}</span>
+                          <span className="font-serif text-xl">
+                            {player.name}
+                          </span>
                         </div>
                       ) : (
                         <button
-                          onClick={joinAsPlayer}
+                          //   onClick={joinAsPlayer}
                           className="flex items-center gap-3 text-black/60 hover:text-black transition-colors italic w-full"
                         >
                           <UserIcon />
-                          <span className="font-serif text-xl">Join the Press...</span>
+                          <span className="font-serif text-xl">
+                            {player.state.name}
+                          </span>
                         </button>
                       )}
                     </div>
@@ -116,12 +113,18 @@ const WordleLobby = () => {
           <div className="mt-6 text-center">
             <button
               className={`
-                relative group overflow-hidden bg-black text-white px-8 py-2 text-xl font-bold rounded-lg transition-transform duration-300 transform ${players.some(p => p.username) ? 'hover:scale-110' : 'cursor-not-allowed opacity-50'}
+                relative group overflow-hidden bg-black text-white px-8 py-2 text-xl font-bold rounded-lg transition-transform duration-300 transform ${
+                  players.some((p) => p.name)
+                    ? "hover:scale-110"
+                    : "cursor-not-allowed opacity-50"
+                }
               `}
-              disabled={!players.some(p => p.username)}
+              onClick={startGame}
             >
               <div className="absolute inset-0 bg-black/20 transform -skew-x-12 group-hover:skew-x-12 transition-transform" />
-              <span className="relative font-serif tracking-widest">START THE PRESS</span>
+              <span className="relative font-serif tracking-widest">
+                START THE PRESS
+              </span>
             </button>
           </div>
 

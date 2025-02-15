@@ -18,6 +18,7 @@ const TIMER_STAGE = {
 export const GameStateProvider = ({ children }) => {
     const [stage, setStage] = useMultiplayerState("gameStage", "lobby");
     const [timer, setTimer] = useMultiplayerState("gameTimer", TIMER_STAGE.lobby);
+    const [isGameOver, setIsGameOver] = useState(false);
     const [players, setPlayers] = useState([]);
     const [isSoloGame, setIsSoloGame] = useState(false);
     const host = isHost();
@@ -41,7 +42,7 @@ export const GameStateProvider = ({ children }) => {
         }
         if (stage === "lobby") return;
         const timeout = setTimeout(() => {
-            let newTime = stage === "game" ? timer + 1 : timer - 1;
+            let newTime = stage === "game" ? timer - 1 : timer - 1;
             if (newTime === 0 ){
                 const nextStage = NEXT_STAGE[stage];
                 setStage(nextStage, true);
@@ -60,8 +61,18 @@ export const GameStateProvider = ({ children }) => {
     setIsSoloGame(players.length === 1);
   };
 
+  const endGame = () => {
+    if(isGameOver) {
+        return;
+    }
+    setIsGameOver(true);
+    setStage("winner");
+    setTimer(TIMER_STAGE.winner);
+    }
+
+
     return (
-        <GameStateContext.Provider value={{stage, timer, players, host, isSoloGame, startGame}}>
+        <GameStateContext.Provider value={{stage, timer, players, host, isSoloGame, startGame, endGame}}>
         {children}
         </GameStateContext.Provider>
     );
