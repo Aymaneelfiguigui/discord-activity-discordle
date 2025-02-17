@@ -4,6 +4,7 @@ const Line = ({ guess, isFinal, solutionWord }) => {
   const [tiles, setTiles] = useState([]);
 
   useEffect(() => {
+    console.log("solution word", solutionWord)
     const newTiles = [];
     for (let i = 0; i < 5; i++) {
       const char = guess[i];

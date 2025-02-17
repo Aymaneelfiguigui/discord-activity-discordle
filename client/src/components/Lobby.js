@@ -18,14 +18,14 @@ const UserIcon = () => (
   </svg>
 );
 
-const WordleLobby = () => {
-  const { timer, stage, host, startGame } = useGameState();
+const WordleLobby = ({setSolutionWord, setCurrentGuess }) => {
+  const {  startGame, players } = useGameState();
 
-  const players = usePlayersList(true);
   console.log("players are here : ", players);
   players.forEach((player) => {
-    player.name = `user ${Math.floor(Math.random() * 100)}`;
+    player.name = `user ${player.id[0]}`;
   });
+
 
   return (
     <div
@@ -88,7 +88,7 @@ const WordleLobby = () => {
                         <div className="flex items-center gap-3">
                           <UserIcon />
                           <span className="font-serif text-xl">
-                            {player.name}
+                            {player.id}
                           </span>
                         </div>
                       ) : (
@@ -119,7 +119,7 @@ const WordleLobby = () => {
                     : "cursor-not-allowed opacity-50"
                 }
               `}
-              onClick={startGame}
+              onClick={()=> startGame(setSolutionWord, setCurrentGuess)}
             >
               <div className="absolute inset-0 bg-black/20 transform -skew-x-12 group-hover:skew-x-12 transition-transform" />
               <span className="relative font-serif tracking-widest">

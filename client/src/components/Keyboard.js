@@ -41,7 +41,7 @@ function getLetterColor(guesses, solutionWord, letter) {
     return bestColor;
 }
 
-  const Keyboard = ({ solutionWord = "HELLO", guesses = [] }) => {
+  const Keyboard = ({ solutionWord = "HELLO", guesses = [], onKeyPress }) => {
     const keyboardLayout = [
       ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
       ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
@@ -49,6 +49,16 @@ function getLetterColor(guesses, solutionWord, letter) {
     ];
   
     const [keyboardRows, setKeyboardRows] = useState([]);
+
+    const handleKeyClick = (letter) => {
+        // Create a synthetic event similar to keyboard event
+        const keyEvent = {
+          key: letter,
+          preventDefault: () => {}
+        };
+        onKeyPress(keyEvent);
+      };
+    
   
     useEffect(() => {
         const rows = keyboardLayout.map((row) =>
@@ -111,6 +121,7 @@ function getLetterColor(guesses, solutionWord, letter) {
                 border-4 border-black
                 transition-all duration-150
                 hover:scale-105
+                hover:cursor-pointer
                 active:scale-100
                 //add white text shadow
                 active:shadow-[0_2px_0_rgba(0,0,0,0.5)]
@@ -129,6 +140,7 @@ function getLetterColor(guesses, solutionWord, letter) {
                     textShadow: "1px 1px 1px white"
 
                   }}
+                  onClick={() => handleKeyClick(keyObj.letter)}
                 >
                   {keyObj.letter === "BACKSPACE" ? "←" : keyObj.letter}
                 </div>

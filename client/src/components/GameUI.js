@@ -4,8 +4,16 @@ import { useGameState } from "../hooks/UseGameState";
 import { handleType } from "../Logic/gameLogic";
 import Keyboard from "./Keyboard";
 
-const GameUI = ({ player, solutionWord, guesses, currentGuess, setCurrentGuess, setGuesses }) => {
-  const { timer, stage, host, startGame, endGame } = useGameState();
+const GameUI = ({
+  player,
+  solutionWord,
+  guesses,
+  currentGuess,
+  setCurrentGuess,
+  setGuesses,
+  setSolutionWord,
+}) => {
+  const { timer, stage, host, endGame } = useGameState();
 
   const secondsToMinutesFormat = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -13,10 +21,35 @@ const GameUI = ({ player, solutionWord, guesses, currentGuess, setCurrentGuess, 
     return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
   };
 
+  const handleKeyPress = (event) => {
+    if (stage === "game") {
+      handleType(
+        event,
+        currentGuess,
+        setCurrentGuess,
+        endGame,
+        solutionWord,
+        
+        guesses,
+        
+        player
+      );
+    }
+  };
+
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (stage === "game") {
-        handleType(event, currentGuess, setCurrentGuess, endGame, solutionWord, guesses, setGuesses);
+        handleType(
+          event,
+          currentGuess,
+          setCurrentGuess,
+          endGame,
+          solutionWord,
+          
+          guesses,
+          player
+        );
       }
     };
 
@@ -24,7 +57,15 @@ const GameUI = ({ player, solutionWord, guesses, currentGuess, setCurrentGuess, 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [stage, setCurrentGuess, currentGuess, endGame, solutionWord, guesses, setGuesses]);
+  }, [
+    stage,
+    setCurrentGuess,
+    currentGuess,
+    endGame,
+    solutionWord,
+    guesses,
+    setSolutionWord,
+  ]);
 
   return (
     <div
@@ -47,12 +88,19 @@ const GameUI = ({ player, solutionWord, guesses, currentGuess, setCurrentGuess, 
           const isCurrentGuess = i === guesses.findIndex((g) => g === null);
           return (
             <div key={i} className="flex justify-center mb-2">
-              <Line guess={isCurrentGuess ? currentGuess : guess ?? ''} isFinal={!isCurrentGuess && guess != null} solutionWord={solutionWord} />
+              <Line
+                guess={isCurrentGuess ? currentGuess : guess ?? ""}
+                isFinal={!isCurrentGuess && guess != null}
+                solutionWord={solutionWord}
+              />
             </div>
           );
         })}
-          <Keyboard solutionWord={solutionWord} guesses={guesses} />
-
+        <Keyboard
+          solutionWord={solutionWord}
+          guesses={guesses}
+          onKeyPress={handleKeyPress}
+        />
       </div>
     </div>
   );

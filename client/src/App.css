@@ -106,3 +106,65 @@
     background-color: #3a3a3c;
   }
 }
+
+/* Old Paper Background & Overlays */
+.winner {
+  background-color: #f4e6cc;
+  background-image: 
+    radial-gradient(circle, rgba(0,0,0,0.1) 2px, transparent 2px),
+    radial-gradient(circle, rgba(0,0,0,0.1) 2px, transparent 2px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+/* Decorative Elements */
+.winner h1 {
+  font-family: "Playfair Display", serif;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.winner h1::before,
+.winner h1::after {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 4px;
+  background: #000;
+}
+
+.winner h1::before {
+  top: -10px;
+  left: calc(50% - 20px);
+}
+
+.winner h1::after {
+  bottom: -10px;
+  left: calc(50% - 20px);
+}
+
+/* Text Styles */
+.winner p {
+  font-family: "Times New Roman", serif;
+  line-height: 1.6;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Style */
+.winner-button {
+  background: linear-gradient(45deg, #ff6b6b, #ff3333);
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Additional Styles */
+.winner h2 {
+  font-family: "Playfair Display", serif;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.winner div.border-t-4 {
+  border-top: 4px solid black;
+  border-bottom: 4px solid black;
+  padding: 0.5rem 0;
+}
