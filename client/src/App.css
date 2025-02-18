@@ -108,7 +108,8 @@
 }
 
 /* Old Paper Background & Overlays */
-.winner {
+.loser,
+.winner{
   background-color: #f4e6cc;
   background-image: 
     radial-gradient(circle, rgba(0,0,0,0.1) 2px, transparent 2px),
@@ -118,12 +119,14 @@
 }
 
 /* Decorative Elements */
+.loser h1,
 .winner h1 {
   font-family: "Playfair Display", serif;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   position: relative;
 }
-
+.loser h1::before,
+.loser h1::after,
 .winner h1::before,
 .winner h1::after {
   content: "";
@@ -132,18 +135,19 @@
   height: 4px;
   background: #000;
 }
-
+.loser h1::before,
 .winner h1::before {
   top: -10px;
   left: calc(50% - 20px);
 }
-
+.loser h1::after, 
 .winner h1::after {
   bottom: -10px;
   left: calc(50% - 20px);
 }
 
 /* Text Styles */
+.loser p,
 .winner p {
   font-family: "Times New Roman", serif;
   line-height: 1.6;
@@ -151,6 +155,7 @@
 }
 
 /* Button Style */
+.loser-button,
 .winner-button {
   background: linear-gradient(45deg, #ff6b6b, #ff3333);
   border: none;
@@ -158,11 +163,12 @@
 }
 
 /* Additional Styles */
+.loser h2,
 .winner h2 {
   font-family: "Playfair Display", serif;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
-
+.loser div.border-t-4,
 .winner div.border-t-4 {
   border-top: 4px solid black;
   border-bottom: 4px solid black;

@@ -13,8 +13,8 @@ const NEXT_STAGE = {
 
 const TIMER_STAGE = {
     lobby : -1,
-    game : 5*60,
-    winner : 5
+    game : 10,
+    winner : 7
 }
 
 export const GameStateProvider = ({ children }) => {
@@ -127,7 +127,7 @@ export const GameStateProvider = ({ children }) => {
   };
 
     return (
-        <GameStateContext.Provider value={{stage, timer, players, host, isSoloGame, startGame, endGame, currentPlayer}}>
+        <GameStateContext.Provider value={{stage, timer, players, host, isSoloGame, startGame, endGame, currentPlayer, TIMER_STAGE}}>
         {children}
         </GameStateContext.Provider>
     );

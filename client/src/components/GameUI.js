@@ -13,12 +13,22 @@ const GameUI = ({
   setGuesses,
   setSolutionWord,
 }) => {
-  const { timer, stage, host, endGame } = useGameState();
+  const { timer, stage, host, endGame, TIMER_STAGE } = useGameState();
 
   const secondsToMinutesFormat = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+  };
+
+  const getTimerColor = (currentTime) => {
+    // Calculate percentage of time remaining
+    const percentage = (currentTime / TIMER_STAGE.game) * 100;
+    
+    if (percentage <= 20) return 'text-red-600 animate-pulse'; // Last 20% - Critical
+    if (percentage <= 35) return 'text-red-500'; // Last 35% - Danger
+    if (percentage <= 50) return 'text-yellow-500'; // Last 50% - Warning
+    return 'text-green-500'; // Above 50% - Safe
   };
 
   const handleKeyPress = (event) => {
@@ -29,9 +39,9 @@ const GameUI = ({
         setCurrentGuess,
         endGame,
         solutionWord,
-        
+
         guesses,
-        
+
         player
       );
     }
@@ -46,7 +56,7 @@ const GameUI = ({
           setCurrentGuess,
           endGame,
           solutionWord,
-          
+
           guesses,
           player
         );
@@ -79,10 +89,16 @@ const GameUI = ({
         backgroundPosition: "0 0, 10px 10px",
       }}
     >
-      <div className="max-w-4xl w-full bg-white shadow-xl rounded-lg overflow-hidden p-6 transform transition-transform duration-300 hover:scale-105">
-        <h1 className="text-3xl font-bold text-center mb-4 text-shadow-md text-red-500">
+      <div className="max-w-4xl w-full bg-white shadow-xl text-center rounded-lg overflow-hidden p-6 transform transition-transform duration-300 hover:scale-105">
+      <h1
+          className={`text-3xl font-black mb-2 transition-colors duration-300 ${getTimerColor(timer)}`}
+          style={{
+            fontFamily: "Playfair Display, serif",
+            textShadow: "1px 1px #fff, 2px 2px #000",
+          }}
+        >
           {secondsToMinutesFormat(timer)}
-        </h1>
+        </h1> 
 
         {guesses.map((guess, i) => {
           const isCurrentGuess = i === guesses.findIndex((g) => g === null);

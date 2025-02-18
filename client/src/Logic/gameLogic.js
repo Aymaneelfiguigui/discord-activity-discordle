@@ -85,31 +85,3 @@ export const handleType = (
   });
 };
 
-const FALLBACK_WORDS = [
-  "REACT", "WORDS", "GAMES", "TESTS", "LOGIC",
-  "SETUP", "FETCH", "BLOCK", "LEARN", "WORLD"
-];
-
-// Cache the words to avoid unnecessary API calls
-let cachedWords = null;
-
-export const setRandomizedSolutionWord = async (setSolutionWord) => {
-  try {
-    if (!cachedWords) {
-      const response = await fetch('https://api.frontendexpert.io/api/fe/wordle-words');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      cachedWords = await response.json();
-    }
-
-    const words = cachedWords;
-    const newSolution = words[Math.floor(Math.random() * words.length)].toUpperCase();
-    setSolutionWord(newSolution);
-  } catch (error) {
-    console.error("Failed to fetch words:", error);
-    // Use fallback words if API fails
-    const fallbackSolution = FALLBACK_WORDS[Math.floor(Math.random() * FALLBACK_WORDS.length)];
-    setSolutionWord(fallbackSolution);
-  }
-};
