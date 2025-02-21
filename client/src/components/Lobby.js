@@ -21,7 +21,7 @@ const UserIcon = () => (
 const WordleLobby = ({setSolutionWord, setCurrentGuess }) => {
   const {  startGame, players } = useGameState();
 
-  console.log("players are here : ", players);
+  console.log("players are here : ", players[0]);
   players.forEach((player) => {
     player.name = `user ${player.id[0]}`;
   });
@@ -84,11 +84,11 @@ const WordleLobby = ({setSolutionWord, setCurrentGuess }) => {
                     className="group relative bg-[#e8d5b5] border-2 border-black/40 rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105"
                   >
                     <div className="p-4 flex items-center justify-between">
-                      {player.name ? (
+                      {player.state.profile.name ? (
                         <div className="flex items-center gap-3">
                           <UserIcon />
                           <span className="font-serif text-xl">
-                            {player.id}
+                            {player.state.profile.name}
                           </span>
                         </div>
                       ) : (

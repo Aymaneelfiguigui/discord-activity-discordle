@@ -100,7 +100,7 @@ const GameUI = ({
           {secondsToMinutesFormat(timer)}
         </h1> 
 
-        {guesses.map((guess, i) => {
+        {guesses?.map((guess, i) => {
           const isCurrentGuess = i === guesses.findIndex((g) => g === null);
           return (
             <div key={i} className="flex justify-center mb-2">

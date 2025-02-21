@@ -11,7 +11,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 async function startGame() {
   try {
     await insertCoin({
-      skipLobby: true, // Set to false to use PlayroomKit's lobby system
+      skipLobby: true,
+      gameId: "5qDTtHQAe3etsNJ7m4xL",
+      discord: true // Set to false to use PlayroomKit's lobby system
     });
 
     root.render(

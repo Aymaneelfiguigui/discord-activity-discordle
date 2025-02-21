@@ -12,10 +12,21 @@ const Winner = () => {
   const actualWinner = players.find((p) => p.state?.isWinner);
 
   const isTimerRanOut = stage === "winner" && !actualWinner;
+
   // If we're not in the 'winner' stage, show nothing
-  if (stage !== "winner") {
+  const hasUsedAllGuesses = currentPlayer?.state?.guesses?.every(guess => guess !== null);
+  const isLoser = hasUsedAllGuesses && !isWinner;
+
+  if (stage !== "winner" && !isLoser) {
     return null;
   }
+
+  const getAvatarUrl = (player) => {
+    if (player?.state?.profile?.photo) {
+      return player.state.profile.photo;
+    }
+    return '/defaultAvatar.jpg';
+  };
   if (isTimerRanOut) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 loser">
@@ -35,7 +46,7 @@ const Winner = () => {
             {/* Loser Icon */}
             <div className="w-full h-64 bg-gray-300 mb-4 mt-4 flex items-center justify-center border border-black">
               <span className="text-lg font-bold">
-                [Loser Avatar Placeholder]
+              <img src={getAvatarUrl(currentPlayer)} alt="Winner Avatar" />
               </span>
             </div>
           </div>
@@ -94,13 +105,13 @@ const Winner = () => {
               textShadow: "1px 1px #fff, 2px 2px #000",
             }}
           >
-            {currentPlayer.name} Triumphs! 
+            {currentPlayer.state.profile.name} Triumphs! 
           </h1>
 
           {/* User Icon */}
           <div className="w-full h-64 bg-gray-300 mb-4 mt-4 flex items-center justify-center border border-black">
             <span className="text-lg font-bold">
-              [Winner Avatar Placeholder]
+              <img src={getAvatarUrl(currentPlayer)} alt="Winner Avatar" />
             </span>
           </div>
         </div>
@@ -109,9 +120,9 @@ const Winner = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="border-r-4 border-black pr-4">
             <p className="text-lg font-serif text-justify">
-              In a dramatic showdown, <strong>{currentPlayer.name}</strong> has
+              In a dramatic showdown, <strong>{currentPlayer.state.profile.name}</strong> has
               emerged as the champion of today's word puzzle! The competition
-              was intense, but {currentPlayer.name}'s strategic brilliance and
+              was intense, but {currentPlayer.state.profile.name}'s strategic brilliance and
               lightning-fast guesses outshone all rivals. The victory has
               already sparked excitement across the Discord community.
             </p>
@@ -119,9 +130,9 @@ const Winner = () => {
           <div className="flex flex-col justify-between">
             <div>
               <p className="text-lg font-serif text-justify">
-                Witnesses report that {currentPlayer.name} solved the puzzle in
+                Witnesses report that {currentPlayer.state.profile.name} solved the puzzle in
                 record time, leaving opponents speechless. Many are already
-                hailing {currentPlayer.name} as the undisputed word master of
+                hailing {currentPlayer.state.profile.name} as the undisputed word master of
                 the realm.
               </p>
             </div>
@@ -163,7 +174,7 @@ const Winner = () => {
           {/* Loser Icon */}
           <div className="w-full h-64 bg-gray-300 mb-4 mt-4 flex items-center justify-center border border-black">
             <span className="text-lg font-bold">
-              [Loser Avatar Placeholder]
+            <img src={getAvatarUrl(currentPlayer)} alt="Winner Avatar" />
             </span>
           </div>
         </div>
@@ -181,7 +192,7 @@ const Winner = () => {
           <div className="flex flex-col justify-between">
             <div>
               <p className="text-lg font-serif text-justify">
-                Meanwhile, <strong>{actualWinner?.name}</strong> claimed victory
+                Meanwhile, <strong>{actualWinner?.state.profile.name}</strong> claimed victory
                 with lightning speed, stunning onlookers across the Discord
                 realm. Rumor has it they're already basking in the glory of a
                 well-earned triumph. Better luck next time!

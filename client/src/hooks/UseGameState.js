@@ -13,7 +13,7 @@ const NEXT_STAGE = {
 
 const TIMER_STAGE = {
     lobby : -1,
-    game : 10,
+    game : 4*60,
     winner : 7
 }
 
