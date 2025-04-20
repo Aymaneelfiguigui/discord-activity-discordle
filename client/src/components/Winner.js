@@ -72,12 +72,12 @@ const Winner = () => {
                 </p>
               </div>
               <div className="mt-4 flex justify-center">
-                <button
+                {/* <button
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded loser-button"
                   onClick={() => window.location.reload()}
                 >
                   Restart Game
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
@@ -137,12 +137,12 @@ const Winner = () => {
               </p>
             </div>
             <div className="mt-4 flex justify-center">
-              <button
+              {/* <button
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded winner-button"
                 onClick={() => window.location.reload()}
               >
                 Restart Game
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -199,12 +199,12 @@ const Winner = () => {
               </p>
             </div>
             <div className="mt-4 flex justify-center">
-              <button
+              {/* <button
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded loser-button"
                 onClick={() => window.location.reload()}
               >
                 Restart Game
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

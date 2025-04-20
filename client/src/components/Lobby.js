@@ -19,12 +19,15 @@ const UserIcon = () => (
 );
 
 const WordleLobby = ({setSolutionWord, setCurrentGuess }) => {
-  const {  startGame, players } = useGameState();
+  const {  startGame, players, stage } = useGameState();
 
   console.log("players are here : ", players[0]);
   players.forEach((player) => {
     player.name = `user ${player.id[0]}`;
   });
+  const isGameInProgress = stage === "game";
+
+  // If game is in progress, show waiting screen
 
 
   return (

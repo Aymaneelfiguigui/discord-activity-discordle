@@ -14,7 +14,7 @@ const NEXT_STAGE = {
 const TIMER_STAGE = {
     lobby : -1,
     game : 4*60,
-    winner : 7
+    winner : 4
 }
 
 export const GameStateProvider = ({ children }) => {
